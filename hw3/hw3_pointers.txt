@@ -1,0 +1,12 @@
+line 8 declares the addThreePlayers function
+
+line 11 makes a pointer
+
+line 12 sets the pointer's address to the address of the homeTeam 
+struct
+
+line 14 sets the homeTeam's city member to "Angola"
+
+line 15 set's the homeTeam's numberPlayers member to 9
+
+line 23 increments the passed team's numberPlayers member by 3

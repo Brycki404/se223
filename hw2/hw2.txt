@@ -1,0 +1,48 @@
+1. 
+i)
+cd		->	/home/john
+cd /l*		->	/lib
+cd ..		->	/
+pwd		->	/
+
+ii)
+cd l*		->	/home/john/lectures
+cd ./		->	/home/john/lectures
+cd ./		->	/home/john/lectures
+pwd		-> 	/home/john/lectures
+
+iii)
+cd ..		->	/home
+cd ..		->	/
+cd ~		->	/home/john
+pwd		->	/home/john
+
+iv)
+cd /		->	/
+cd u*/l*	->	/usr/local
+cd ../?bin	->	/user/bin
+pwd		->	/user/bin
+
+2.
+mv hello.txt ~/document.txt	->	moves and renames hello.txt to ~/document.txt
+ifconfig -a			->	displays all network interfaces on the system
+uname -r			->	prints the kernel release version of the currently running Linux kernel
+df -h				->	shows disk space usage for mounted filesystems
+
+3.
+chmod a-w welcome.txt		->	-r--r--r--
+chmod o+x welcome.txt		->	-r--r--r-x
+chmod u=rw,g=r,o=r welcome.txt	->	-rw-r--r--
+chmod 762 welcome.txt		->	-rwxrw--w-
+chmod 740 welcome.txt		->	-rwxr-----
+
+4.
+run less on /var/log/syslog
+for the first line, type /clock or /chrony or /ntp to search for time synchronization
+type /keyboard or /mouse or /speaker or /hardware for the second line
+
+/clock ->
+2026-01-30T13:07:04.820752-05:00 student4-System-Product-Name systemd-timesyncd[997]: Initial clock synchronization to Fri 2026-01-30 13:06:50.114022 EST.
+
+/keyboard ->
+2026-01-30T08:06:33.566167-05:00 student4-System-Product-Name slick-greeter-set-keyboard-layout:  keyboard-layout: New keyboard configuration: rules: evdev#012model: pc105#012layout: us
