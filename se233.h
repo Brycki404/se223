@@ -27,9 +27,11 @@
 #include <synchapi.h>    // Sleep(), synchronization
 #include <direct.h>      // _mkdir(), _chdir()
 
-typedef int pid_t; // Define pid_t as int for Windows
-typedef int key_t; // Define key_t as int for System V IPC stubs
-typedef int ssize_t; // Define ssize_t as int for message queue stubs
+typedef int key_t;
+#ifdef _MSC_VER
+    typedef int pid_t;
+    typedef SSIZE_T ssize_t;
+#endif
 
 // Basic POSIX-ish typedefs
 #ifndef S_IRWXU
