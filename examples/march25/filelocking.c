@@ -3,6 +3,48 @@
 //It was written by Andy Mitofsky.
 #include "../../se233.h"
 
+void xp_fork_child(void *arg)
+{
+    printf("Child says hi \n");
+    const char *kidbuf = "pepper";
+    sleep(2);
+
+    printf("Child is trying to get lock\n");
+
+    int fd = open("veggies.txt", O_CREAT | O_APPEND | O_RDWR);
+    if (fd == -1)
+    {
+        perror("open error");
+    }
+
+    if (lockf(fd, F_LOCK, 0) == 0) {
+        if (write(fd, kidbuf, strlen(kidbuf)) == -1)
+        {
+            perror("write error");
+        }
+        printf("Child wrote\n");
+    }
+    else
+    {
+        perror("child can't get lock");
+    }
+
+    if (lockf(fd, F_ULOCK, 0) == -1) {
+        perror("lockf error");
+    }
+
+    if (close(fd) == -1) {
+        perror("close error");
+    }
+
+    printf("Child is done\n");
+
+    #ifdef _WIN32
+        // Threads must exit explicitly
+        ExitThread(0);
+    #endif
+}
+
 int main()
 {
     int fd;
@@ -10,48 +52,6 @@ int main()
     pid_t kidpid;
     pid_t wpid;
     int y;
-
-    void xp_fork_child(void *arg)
-    {
-        printf("Child says hi \n");
-        const char *kidbuf = "pepper";
-        sleep(2);
-
-        printf("Child is trying to get lock\n");
-
-        int fd = open("veggies.txt", O_CREAT | O_APPEND | O_RDWR, 0666);
-        if (fd == -1)
-        {
-            perror("open error");
-        }
-
-        if (lockf(fd, F_LOCK, 0) == 0) {
-            if (write(fd, kidbuf, strlen(kidbuf)) == -1)
-            {
-                perror("write error");
-            }
-            printf("Child wrote\n");
-        }
-        else
-        {
-            perror("child can't get lock");
-        }
-
-        if (lockf(fd, F_ULOCK, 0) == -1) {
-            perror("lockf error");
-        }
-
-        if (close(fd) == -1) {
-            perror("close error");
-        }
-
-        printf("Child is done\n");
-
-        #ifdef _WIN32
-            // Threads must exit explicitly
-            ExitThread(0);
-        #endif
-    }
 
     kidpid = xp_fork();
     if (kidpid == -1)
@@ -102,6 +102,4 @@ int main()
              perror("close error");
          }
     }
-
-    return 0;
 }

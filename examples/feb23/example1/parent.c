@@ -29,41 +29,42 @@ int main()
     pid_t myppid;
 
     // Let's display our pid and ppid
-    mypid = getpid();
+    mypid = xp_getpid();
     if (mypid < 0)
     {
         perror("Getpid error");
     }
     printf("My pid is %d \n", mypid);
-    myppid = getppid();
+    myppid = xp_getppid();
     if (myppid < 0)
     {
         perror("Getppid error");
     }
     printf("My ppid is %d \n", myppid);
 
-    // Fork the child
-    kidpid = fork();
-    if (kidpid < 0)
-    {
-        perror("Fork error");
-    }
-    if (kidpid == 0)
+    void child_fn(void *arg)
     {
         // We're in the child
         printf("Child says hi \n");
-        r = execl("hello.o", "hello.o", NULL);
+        r = xp_execl("hello.o", "hello.o", NULL);
         if (r == -1)
         {
             perror("Execl error");
         }
     }
-    else
+
+    // Fork the child
+    kidpid = xp_fork(child_fn, NULL);
+    if (kidpid < 0)
+    {
+        perror("Fork error");
+    }
+    if (kidpid > 0)
     {
         // We're in the parent
         printf("The parent says hello \n");
         // Parent should wait on the child
-        wpid = wait(&y);
+        wpid = xp_waitpid(kidpid, &y, 0);
         if (wpid < 0)
         {
             perror("Wait error");
