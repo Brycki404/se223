@@ -82,10 +82,10 @@ static inline int lockf(int fd, int cmd, long len) {
 // -------------------------------
 // unistd.h equivalents
 // -------------------------------
-// static inline unsigned int sleep(unsigned int seconds) {
-//     Sleep(seconds * 1000);
-//     return 0;
-// }
+static inline unsigned int sleep(unsigned int seconds) {
+    Sleep(seconds * 1000);
+    return 0;
+}
 
 static inline int usleep(unsigned int usec) {
     Sleep((DWORD)(usec / 1000));
