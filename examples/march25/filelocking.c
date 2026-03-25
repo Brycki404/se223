@@ -11,47 +11,59 @@ int main()
     pid_t wpid;
     int y;
 
-    //fork the child
-    kidpid=fork();
-    if (kidpid==-1)
+    void xp_fork_child(void *arg)
     {
-        perror("Fork error");
-    }
-    if (kidpid==0)
-    {
-        //We're in the child
         printf("Child says hi \n");
-        const char *kidbuf="pepper";
+        const char *kidbuf = "pepper";
         sleep(2);
-        //child tries to get lock
-        printf("Child is trying to get lock \n");
-        fd=open("veggies.txt", O_CREAT|O_APPEND|O_RDWR);
-        if (fd==-1)
+
+        printf("Child is trying to get lock\n");
+
+        int fd = open("veggies.txt", O_CREAT | O_APPEND | O_RDWR, 0666);
+        if (fd == -1)
         {
             perror("open error");
         }
-        if (lockf(fd, F_LOCK, 0)==0)
-        {
-            if (write(fd, kidbuf, strlen(kidbuf))==-1)
+
+        if (lockf(fd, F_LOCK, 0) == 0) {
+            if (write(fd, kidbuf, strlen(kidbuf)) == -1)
             {
                 perror("write error");
             }
-            printf("Child wrote \n");
+            printf("Child wrote\n");
         }
         else
         {
-            perror("child can''t get lock \n");
+            perror("child can't get lock");
         }
-        //child releases lock
-        if (lockf(fd, F_ULOCK, 0)==-1)
-        {
+
+        if (lockf(fd, F_ULOCK, 0) == -1) {
             perror("lockf error");
         }
-        if (close(fd)==-1)
-        {
+
+        if (close(fd) == -1) {
             perror("close error");
         }
-         printf("Child is done \n");
+
+        printf("Child is done\n");
+
+        #ifdef _WIN32
+            // Threads must exit explicitly
+            ExitThread(0);
+        #endif
+    }
+
+    kidpid = xp_fork();
+    if (kidpid == -1)
+    {
+        perror("Fork error");
+    }
+    else if (kidpid == 0)
+    {
+        #ifndef _WIN32
+            // Linux child runs here
+            xp_fork_child(NULL);
+         #endif
     }
     else
     {
