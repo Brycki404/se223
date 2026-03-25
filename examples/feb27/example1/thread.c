@@ -11,7 +11,7 @@ int main()
 	int j=0;
 	pthread_t threader;
 
-	ret =pthread_create(&threader, NULL, thread_func, NULL);
+	ret = pthread_create(&threader, NULL, thread_func, NULL);
 	if(ret!=0)
 	{
 		errno=ret;

@@ -5,20 +5,20 @@ int main()
 {
 	pid_t mypid;
 	int nv=0;
-	mypid=getpid();
+	mypid=xp_getpid();
 	if(mypid<0)
 	{
 		perror("mypid error");
 	}
 	errno=0;
-	nice(0);
+	xp_nice(0);
 	if((nv==-1)&&(errno!=0))
 	{
 		perror("nice error");
 	}
 	printf("Nice value of process %d is %d \n", mypid, nv);
 	errno=0;
-	nv=nice(-3);
+	nv=xp_nice(-3);
 	if((nv==-1)&&(errno!=0))
 	{
 		perror("nice error");

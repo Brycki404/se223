@@ -10,24 +10,24 @@ int main()
 	pid_t wpid=0;
 	int y;
 
+	void child_fn(void *arg)
+	{
+		//We're in the child
+		printf("Kid says hi \n");
+		return 0;
+	}
+
 	if((mypid=getpid())==-1)
 	{
 		perror("getpid error");
 	}
 	//fork the child
-	kidpid=fork();
+	kidpid=xp_fork(child_fn);
 	if(kidpid==-1)
 	{
 		perror("fork error");
 	}
-	if(kidpid==0)
-	{
-		//We're in the child
-		printf("Kid says hi \n");
-		return 0;
-
-	}
-	else
+	if(kidpid>0)
 	{
 		//We're in the parent
 		printf("Parent says hello \n");
@@ -38,7 +38,7 @@ int main()
 		}
 		sleep(1);
 		//Now we'll wait on the child
-		wpid=wait(&y);
+		wpid=xp_waitpid(kidpid, &y, 0);
 		printf("We have now properly waited on the child process \n");
 		if(system("ps ax | grep zombieEx")==-1)
 		{

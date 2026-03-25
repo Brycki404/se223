@@ -155,9 +155,34 @@
         // -------------------------------
         // pthread.h minimal emulation
         // -------------------------------
+
         typedef HANDLE pthread_t;
-        typedef CRITICAL_SECTION pthread_mutex_t;
         typedef void pthread_attr_t; // unused
+
+        typedef struct {
+            HANDLE h;
+        } pthread_mutex_t;
+
+        #define PTHREAD_MUTEX_INITIALIZER { NULL }
+
+        static inline int pthread_mutex_init(pthread_mutex_t *m, void *attr) {
+            (void)attr;
+            m->h = CreateMutex(NULL, FALSE, NULL);
+            return (m->h == NULL) ? -1 : 0;
+        }
+
+        static inline int pthread_mutex_lock(pthread_mutex_t *m) {
+            DWORD r = WaitForSingleObject(m->h, INFINITE);
+            return (r == WAIT_OBJECT_0) ? 0 : -1;
+        }
+
+        static inline int pthread_mutex_unlock(pthread_mutex_t *m) {
+            return ReleaseMutex(m->h) ? 0 : -1;
+        }
+
+        static inline int pthread_mutex_destroy(pthread_mutex_t *m) {
+            return CloseHandle(m->h) ? 0 : -1;
+        }
 
         static inline int pthread_create(pthread_t *thread,
                                         const pthread_attr_t *attr,
@@ -179,27 +204,6 @@
             (void)retval;
             WaitForSingleObject(thread, INFINITE);
             CloseHandle(thread);
-            return 0;
-        }
-
-        static inline int pthread_mutex_init(pthread_mutex_t *m, void *attr) {
-            (void)attr;
-            InitializeCriticalSection(m);
-            return 0;
-        }
-
-        static inline int pthread_mutex_lock(pthread_mutex_t *m) {
-            EnterCriticalSection(m);
-            return 0;
-        }
-
-        static inline int pthread_mutex_unlock(pthread_mutex_t *m) {
-            LeaveCriticalSection(m);
-            return 0;
-        }
-
-        static inline int pthread_mutex_destroy(pthread_mutex_t *m) {
-            DeleteCriticalSection(m);
             return 0;
         }
 

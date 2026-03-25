@@ -16,7 +16,7 @@ int main()
 	char inValue[50];
 	pthread_t threadA;
 	pthread_t threadB;
-	pthread_mutex_t myMutex=PTHREAD_MUTEX_INITIALIZER;
+	pthread_mutex_t myMutex= PTHREAD_MUTEX_INITIALIZER;
 	pthread_mutex_t *mptr;
 	mptr=&myMutex;
 
