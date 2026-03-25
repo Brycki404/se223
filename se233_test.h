@@ -1,7 +1,7 @@
 // Header file for SE233 written by Dustin Knecht
 // Last Update: 3-25-26
-#ifndef se233_h
-#define se233_h
+#ifndef se233_test_h
+#define se233_test_h
 
 // Common C headers
 #include <stdio.h>
@@ -92,21 +92,21 @@ static inline int usleep(unsigned int usec) {
     return 0;
 }
 
-inline pid_t getpid(void) {
-    return (pid_t)_getpid();
-}
+// static inline pid_t getpid(void) {
+//     return (pid_t)_getpid();
+// }
 
-inline int close(int fd) {
-    return _close(fd);
-}
+// static inline int close(int fd) {
+//     return _close(fd);
+// }
 
-inline int read(int fd, void *buf, unsigned int count) {
-    return _read(fd, buf, count);
-}
+// static inline int read(int fd, void *buf, unsigned int count) {
+//     return _read(fd, buf, count);
+// }
 
-inline int write(int fd, const void *buf, unsigned int count) {
-    return _write(fd, buf, count);
-}
+// static inline int write(int fd, const void *buf, unsigned int count) {
+//     return _write(fd, buf, count);
+// }
 
 // -------------------------------
 // fork / exec / wait
@@ -120,7 +120,7 @@ static inline pid_t fork(void) {
 }
 
 // Minimal execvp stub: use _spawnvp and exit
-inline int execvp(const char *file, char *const argv[]) {
+static inline int execvp(const char *file, char *const argv[]) {
     int rc = _spawnvp(_P_OVERLAY, file, (const char * const *)argv);
     if (rc == -1) {
         errno = ENOENT;
