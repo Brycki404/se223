@@ -33,6 +33,11 @@ typedef int key_t;
     typedef SSIZE_T ssize_t;
 #endif
 
+#ifndef _MSC_VER
+    // MinGW or Cygwin → include unistd.h
+    #include <unistd.h>
+#endif
+
 // Basic POSIX-ish typedefs
 #ifndef S_IRWXU
 #define S_IRWXU 0700
@@ -84,19 +89,21 @@ static inline int lockf(int fd, int cmd, long len) {
 // -------------------------------
 // unistd.h equivalents
 // -------------------------------
-static inline unsigned int sleep(unsigned int seconds) {
+inline unsigned int sleep(unsigned int seconds) {
     Sleep(seconds * 1000);
     return 0;
 }
 
-static inline int usleep(unsigned int usec) {
+inline int usleep(unsigned int usec) {
     Sleep((DWORD)(usec / 1000));
     return 0;
 }
 
-inline pid_t getpid(void) {
-    return (pid_t)_getpid();
-}
+#ifdef _MSC_VER
+    inline pid_t getpid(void) {
+        return (pid_t)_getpid();
+    }
+#endif
 
 inline int close(int fd) {
     return _close(fd);
@@ -113,13 +120,6 @@ inline int write(int fd, const void *buf, unsigned int count) {
 // -------------------------------
 // fork / exec / wait
 // -------------------------------
-// True fork() cannot be emulated on Windows.
-// We provide a stub that fails with ENOSYS.
-
-static inline pid_t fork(void) {
-    errno = ENOSYS; // Function not implemented
-    return -1;
-}
 
 // Minimal execvp stub: use _spawnvp and exit
 inline int execvp(const char *file, char *const argv[]) {
