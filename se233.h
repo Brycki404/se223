@@ -62,6 +62,10 @@
             #define IPC_RMID   0
         #endif
 
+        #define STDIN_FILENO  0
+        #define STDOUT_FILENO 1
+        #define STDERR_FILENO 2
+
         #ifndef S_IRWXU
         #define S_IRWXU 0700
         #endif

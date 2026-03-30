@@ -1,7 +1,7 @@
 //This example demonstrates using mutexes.
 //It involves three threads.
 //It was written by Andy Mitofsky
-#include "../../../se233.h"
+#include "../se233.h"
 //declare functions
 static void * threadOne(void * arg);
 static void * threadTwo(void * arg);

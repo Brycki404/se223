@@ -1,7 +1,7 @@
 //This example demonstrates locking a file.
 //This processs forks a child. The parent locks the file and writes. The child tries to access it but has to wait.
 //It was written by Andy Mitofsky.
-#include "../../se233.h"
+#include "../se233.h"
 
 void xp_fork_child(void *arg)
 {

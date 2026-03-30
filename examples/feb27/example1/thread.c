@@ -1,6 +1,6 @@
 //This example demonstrates starting a new thread.
 //It was written by Andy Mitofsky
-#include "../../../se233.h"
+#include "../se233.h"
 //declare a new function
 static void * thread_func(void * arg);
 

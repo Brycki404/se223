@@ -1,6 +1,6 @@
 // This example forks a child and both access mempry repeatedly.
 // It was written by Andy Mitofsky
-#include "../../../se233.h"
+#include "../se233.h"
 
 int main()
 {

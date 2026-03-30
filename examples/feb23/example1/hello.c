@@ -1,5 +1,5 @@
 //This is hello world. It will be the child process
-#include "../../../se233.h"
+#include "../se233.h"
 
 int main()
 {

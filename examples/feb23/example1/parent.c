@@ -1,7 +1,7 @@
 // This program demonstrates fork and execl.
 // Linux only!
 // It was written by Andy Mitofsky
-#include "../../../se233.h"
+#include "../se233.h"
 
 
 // Bash Fork Bomb:

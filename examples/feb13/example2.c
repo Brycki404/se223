@@ -1,6 +1,6 @@
 //This example reads using functions I write myself.
 //It was written by Andy Mitofsky
-#include "../../se233.h"
+#include "../se233.h"
 
 void readAndSmile(FILE * inFile);
 

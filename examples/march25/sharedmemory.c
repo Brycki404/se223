@@ -1,4 +1,4 @@
-#include "../../se233.h"
+#include "../se233.h"
 
 int main()
 {

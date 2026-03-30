@@ -1,7 +1,7 @@
 // This example demonstrates writing with systems calls
 // It was written by Andy Mitofsky
 
-#include "../../se233.h"
+#include "../se233.h"
 
 int main()
 {

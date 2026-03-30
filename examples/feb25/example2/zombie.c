@@ -2,7 +2,7 @@
 //ended but hasn't yet been waited on by its parent.
 //It was written  by Andy Mitofsky closely following the book by Stevens p. 283
 
-#include "../../../se233.h"
+#include "../se233.h"
 int main()
 {
 	pid_t mypid;
