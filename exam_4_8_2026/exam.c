@@ -1,9 +1,31 @@
 // Written by Dustin Knecht for the exam on 4.8.2026 in SE233
+// To be ran on Linux
 
-#include "../se233.h"
+//Header  file for SE233 updated 1-22-25
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stddef.h>
+#include <string.h>
+#include <ctype.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <math.h>
+#include <time.h>
+#include <signal.h>
+#include <stdint.h>
+// LINUX ONLY:
+#include <unistd.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <sys/msg.h>
+#include <sys/wait.h>
+#include <pthread.h>
 
 //declare a new function
-static void five_handler();
+static void* five_handler(void* arg);
 static void eight_handler(int sig);
 
 int main(void)
@@ -56,7 +78,7 @@ int main(void)
         }
         else if (n == 0)
         {
-            
+            break;
         }
         else
         {
@@ -74,15 +96,16 @@ void eight_handler(int sig)
     exit(0);
 }
 
-void five_handler()
+void* five_handler(void* arg)
 {
+    (void)arg;
     for (int i = 1; i <= 5 ; i++)
     {
         if (i > 1)
         {
-            sleep(1); //ms
+            sleep(1); // seconds
         }
         printf("GREAT");
     }
-    exit(0);
+    return NULL;
 }
