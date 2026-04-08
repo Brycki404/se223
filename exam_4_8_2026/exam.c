@@ -25,7 +25,7 @@
 #include <pthread.h>
 
 //declare a new function
-static void* five_handler(void* arg);
+static void * five_handler(void * arg);
 static void eight_handler(int sig);
 
 int main(void)
@@ -89,16 +89,15 @@ int main(void)
     return 0;
 }
 
-void eight_handler(int sig)
+static void eight_handler(int sig)
 {
     (void)sig;
     printf("I'm quitting now.\n");
     exit(0);
 }
 
-void* five_handler(void* arg)
+static void * five_handler(void * arg)
 {
-    (void)arg;
     for (int i = 1; i <= 5 ; i++)
     {
         if (i > 1)
@@ -107,5 +106,5 @@ void* five_handler(void* arg)
         }
         printf("GREAT");
     }
-    return NULL;
+    return 0;
 }
