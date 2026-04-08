@@ -82,7 +82,7 @@ void five_handler()
         {
             sleep(1); //ms
         }
-        printf("GREAT", i);
+        printf("GREAT");
     }
     exit(0);
 }
