@@ -11,6 +11,7 @@
 #include <sys/stat.h>
 #include <math.h>
 #include <time.h>
+#include <signal.h>
 // LINUX ONLY:
 // #include <unistd.h>
 // #include <sys/ipc.h>
