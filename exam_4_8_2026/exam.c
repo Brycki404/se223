@@ -44,48 +44,45 @@ int main(void)
         return 1;
     }
 
-    while (1)
+   int n;
+    printf("Enter a number: ");
+    if (scanf("%d", &n) != 1)
     {
-        int n;
-        printf("Enter a number: ");
-        if (scanf("%d", &n) != 1)
-        {
-            fprintf(stderr, "Invalid input. Enter a valid integer.\n");
-            return 1;
-        }
-
-        if (n == 8)
-        {
-            if (kill(getpid(), SIGUSR1) == -1)
-            {
-                perror("kill");
-                return 1;
-            }
-        }
-        else if (n == 5)
-        {
-            int ret=0;
-            pthread_t threader;
-
-            ret = pthread_create(&threader, NULL, five_handler, NULL);
-            if (ret != 0)
-            {
-                errno = ret;
-                perror("Thread create error");
-            }
-            printf("Main thread says hi \n");
-            pthread_join(threader, NULL);
-        }
-        else if (n == 0)
-        {
-            break;
-        }
-        else
-        {
-            printf("Number is not mapped to any special case.\nTry entering 0, 5, or 8.\n");
-        }
+        fprintf(stderr, "Invalid input. Enter a valid integer.\n");
+        return 1;
     }
 
+    if (n == 8)
+    {
+        if (kill(getpid(), SIGUSR1) == -1)
+        {
+            perror("kill");
+            return 1;
+        }
+    }
+    else if (n == 5)
+    {
+        int ret = 0;
+        pthread_t threadId;
+
+        ret = pthread_create(&threadId, NULL, five_handler, NULL);
+        if (ret != 0)
+        {
+            errno = ret;
+            perror("Thread create error");
+        }
+        printf("Main thread says hi \n");
+        pthread_join(threadId, NULL);
+    }
+    else if (n == 0)
+    {
+        
+    }
+    else
+    {
+        printf("Number is not mapped to any special case.\nTry entering 0, 5, or 8.\n");
+    }
+    
     return 0;
 }
 
