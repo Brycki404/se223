@@ -1,11 +1,10 @@
-// p1_sigusr1.c
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
 
 void huge_handler(int sig) {
-    (void)sig;  // unused
+    (void)sig;
     printf("That number is huge!\n");
     exit(0);
 }
@@ -24,7 +23,6 @@ int main(void) {
     }
 
     if (n > 1000) {
-        // send SIGUSR1 to ourselves
         if (kill(getpid(), SIGUSR1) == -1) {
             perror("kill");
             return 1;

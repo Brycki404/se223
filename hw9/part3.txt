@@ -1,0 +1,20 @@
+One new & one old syscall
+--------------------------------------
+Relatively new system call: pidfd_open
+
+Opens a file descriptor that refers to a process (identified by PID). This “process file descriptor” can then be used with other APIs (like poll, waitid, or pidfd_send_signal) to monitor or signal the process in a race-free way. It helps avoid PID reuse problems.
+
+Linux kernel version first appeared:
+Linux 5.3
+
+Year first appeared: 2019
+--------------------------------------
+Relatively old system call: open
+
+Opens a file or device and returns a file descriptor used for subsequent I/O operations (read, write, etc.). It’s one of the core Unix file system calls.
+
+Linux kernel version first appeared:
+Present in Linux 1.0 and earlier (from the very beginning of Linux).
+
+Year first appeared (Unix):
+The open system call dates back to early Unix. It was present in Unix Version 6 (1975).
