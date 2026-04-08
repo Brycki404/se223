@@ -42,7 +42,17 @@ int main(void)
         }
         else if (n == 5)
         {
-           
+            int ret=0;
+            pthread_t threader;
+
+            ret = pthread_create(&threader, NULL, five_handler, NULL);
+            if (ret != 0)
+            {
+                errno = ret;
+                perror("Thread create error");
+            }
+            printf("Main thread says hi \n");
+            pthread_join(threader, NULL);
         }
         else if (n == 0)
         {
@@ -68,7 +78,10 @@ void five_handler()
 {
     for (int i = 1; i <= 5 ; i++)
     {
-        sleep(1); //ms
+        if (i > 1)
+        {
+            sleep(1); //ms
+        }
         printf("GREAT", i);
     }
     exit(0);
