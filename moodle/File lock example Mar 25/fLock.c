@@ -1,0 +1,96 @@
+//This example demonstrates locking a file.
+//This process forks a child. The parent locks the file and writes. THe child tries to access it but has to wait.
+//It was written by Andy Mitofsky
+#include "../se233.h"
+int main()
+{
+	int fd;
+	pid_t mypid;
+	pid_t kidpid;
+	pid_t wpid;
+	int y;
+
+	//fork the child
+	kidpid=fork();
+	if(kidpid==-1)
+	{
+		perror("Fork error");
+	}
+	if(kidpid==0)
+	{
+	//We're in the child
+		printf("Child says hi \n");
+		const char *kidbuf="pepper";
+		sleep(2);
+		//child tries to get lock
+		printf("Child tries to get lock\n");
+		fd=open("veggies.txt", O_CREAT|O_APPEND|O_RDWR);
+		if(fd==-1)
+		{
+			perror("open error");
+		}
+		if(lockf(fd, F_LOCK,0)==0)
+		{
+			if(write(fd, kidbuf, strlen(kidbuf))==-1)
+				{perror("write error");
+				}
+			printf("Child wrote \n");
+		}
+		else
+		{
+			perror("child can't get lock \n");
+		}
+		//child releases lock 
+		if(lockf(fd, F_ULOCK, 0)==-1)
+		{
+			perror("lockf error");
+		}
+		if(close(fd)==-1)
+		{
+			perror("close error \n");
+		}
+
+	}
+	else
+	{
+		//We're in the parent
+		printf("Parent says hi \n");
+		const char * parentbuf="carrot \n";
+		fd=open("veggies.txt", O_CREAT|O_APPEND|O_RDWR);
+		if(fchmod(fd, S_IRWXU|S_IRWXG|S_IRWXO)==-1)
+		{
+			perror("fchmod error");
+		}
+		//Lock file
+		if(lockf(fd, F_LOCK,0)==-1)
+		{
+			perror("lock error");
+		}
+		//write to the file
+		if(write(fd, parentbuf, strlen(parentbuf))==-1)
+		{
+			perror("write error");
+		}
+		printf("Parent wrote and is holding the lock for a bit \n");
+		sleep(3);
+		//parent releases the lock
+		if(lockf(fd, F_ULOCK, 0)==-1)
+		{
+			perror("lockf error");
+		}
+		printf("Parent is done \n");
+		if(close(fd)==-1)
+		{
+			perror("close error");
+		}
+
+		wpid=wait(&y);
+
+	}
+
+
+
+
+
+	return 0;
+}

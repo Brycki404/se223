@@ -1,0 +1,5 @@
+hello:hello.c
+	gcc -o hello.o hello.c
+
+example: example1.c
+	gcc -o example.o example1.c
