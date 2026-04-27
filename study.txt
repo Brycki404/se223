@@ -1,0 +1,43 @@
+SE 223 Linux C Programming Study Guide
+1. File I/O
+Reading from files using C standard library (fopen, fgets, fclose)
+Writing to files with C functions (fopen, fprintf, fclose)
+File I/O using system calls (open, write, close)
+Example files: example1.c, example1.c, example2.c
+2. Processes
+Creating processes with fork()
+Using execl() to run new programs in child processes
+Parent/child process communication and synchronization (wait())
+Zombie processes and their management
+Example files: parent.c, procExample.c, zombie.c
+3. Signals
+Handling signals with custom signal handlers
+Registering handlers using sigaction
+Example file: sigActionExample.c
+4. Pipes and Interprocess Communication (IPC)
+Anonymous pipes for parent-child communication (pipe())
+Named pipes (FIFOs) with mkfifo, open, read, write
+Using popen for process communication
+Example files: pipeExample.c, pipeReader.c, pipeWriter.c, popenExample.c
+5. Shared Memory
+Creating and using shared memory segments (ftok, shmget, shmat, shmdt)
+Example files: sharedmemory.c, sharedmemorycont.c
+6. File Locking
+Locking files with lockf to prevent concurrent access
+Example file: filelocking.c
+7. Sockets
+Setting up UNIX domain sockets for IPC
+Example file: socket.c
+8. Memory Management
+Manual memory allocation with malloc and free
+Example file: dmExample.c
+9. Structs and Pointers
+Defining and using structs
+Passing structs and pointers to functions
+Example files: hw3_structs.c, hw3_all.c, hw3_pointers.txt
+10. System Calls and Error Handling
+Using system calls and checking return values for errors
+Using perror for error messages
+11. Other Concepts
+Using nice to adjust process priority (nice.c)
+Basic Makefile usage for compiling projects
